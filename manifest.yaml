@@ -1,0 +1,13 @@
+applications:
+  - name: package-recomendation
+    path: .
+    memory: 700M
+    disk_quota: 2034M
+    keep-existing-routes: true
+    buildpacks:
+      - nodejs_buildpack
+    # routes:
+    #   - route: red-app-((org))-((space)).((domain))
+    # env:
+    #   UP_CLIENTID: fa6725f0-017c-4052-8680-e95301db4fd5
+    #   UP_ISSUER: "https://up.accounts.ondemand.com/"
