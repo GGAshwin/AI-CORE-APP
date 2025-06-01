@@ -974,6 +974,7 @@ app.use(json());
 const port = process.env.PORT || 3001;
 
 let embeddedDocs = [];
+let projEmbedeedDocs = [];
 let embeddingClient = new AzureOpenAiEmbeddingClient({
   modelName: "text-embedding-3-small",
   deploymentId: "d95b690b7dee36bb",
@@ -1052,7 +1053,8 @@ async function init() {
       source: "project type", // optional: helps track where the entry came from
     }));
 
-    embeddedDocs = [...sdkEmbeddings, ...projectEmbeddings];
+    embeddedDocs = [...sdkEmbeddings];
+    projEmbedeedDocs = [...projectEmbeddings];
 
     // Log the response
     // console.log(sdkEmbeddings);
@@ -1155,6 +1157,43 @@ async function getFromLLM(input, packages) {
   return JSON.parse(jsonResponse);
 }
 
+async function getProjFromLLM(input, packages) {
+  const response = await client.run({
+    messages: [
+      {
+        role: "system",
+        content: `You are an expert assistant for SAP Build Projects. You are given a list of the top 5 most relevant items, each being a project type:\n${JSON.stringify(
+          packages
+        )}
+          Your task is to:
+          - Understand the user's natural language requirement.
+          - Select the **multiple most appropriate** item from the list that best matches the user's intent.
+    
+          Response rules:
+          - If match is found, respond with natural language text containing which projects to create in which order to achieve the user's intent.
+          - If **none** of the items are relevant, respond with a JSON with property "message": "No project type found".
+          - Do **not** add any explanations, formatting, or text outside of the JSON or message above.
+          - Focus on **meaning and intent**, not just keyword overlap.
+          - Respond with a JSON object containing these keys: "id", "name", and "description" for each project type.`,
+      },
+      {
+        role: "user",
+        content: `User query: "${input}"`,
+      },
+    ],
+  });
+
+  let jsonResponse = response.getContent();
+  console.log("LLM Response:", jsonResponse);
+
+  if (response.getContent().startsWith("```json")) {
+    jsonResponse = extractJsonFromLLMResponse(jsonResponse);
+  }
+  console.log("Extracted JSON:", jsonResponse);
+
+  return JSON.parse(jsonResponse);
+}
+
 app.post("/", async (req, res) => {
   if (embeddedDocs.length === 0) {
     return res.status(500).json({ error: "No embedded documents available" });
@@ -1219,6 +1258,80 @@ app.post("/", async (req, res) => {
   }
 
   return res.json(best);
+});
+
+app.post("/proj_suggestion", async (req, res) => {
+  const { input } = req.body;
+  if (!input) return res.status(400).json({ error: "Question required" });
+
+  const inputObj = {
+    input: input,
+    user: "pseudo-user-id", // Optional: Add a pseudo-anonymized user ID
+  };
+
+  let queryEmbedding = await embeddingClient.run(inputObj);
+  console.log(queryEmbedding);
+
+  queryEmbedding = queryEmbedding.getEmbeddings()[0];
+
+  console.log(queryEmbedding);
+
+  console.log("Query vector length:", queryEmbedding.length);
+  console.log("Document vector length:", embeddedDocs.length);
+
+  const ranked = projEmbedeedDocs
+    .map((doc) => ({
+      doc,
+      score: cosineSimilarity(queryEmbedding, doc.vector),
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  const topFive = ranked.slice(0, 5);
+
+  console.log("Ranked:", topFive);
+
+  const topCandidates = topFive.map((pak) => {
+    return {
+      id: pak.doc.id,
+      name: pak.doc.name,
+      description: pak.doc.description,
+    };
+  });
+
+  console.log("Mapped Top Candidates", topCandidates);
+
+  const best = await getProjFromLLM(input, topCandidates);
+  console.log(best);
+
+  if (best.message === "No package or project type found") {
+    return res.status(404).json(best);
+  }
+
+  logsArray.push({
+    input: input,
+    best: best,
+    timestamp: new Date().toISOString(),
+  });
+
+  //check if the id of the best is in PROJ_TYPES object
+  // if (PROJ_TYPES.includes(best.id)) {
+  //   best.type = "project-type";
+  // } else {
+  //   best.type = "sdk";
+  // }
+
+  return res.json(best);
+});
+
+app.post("/checkreq", (req, res) => {
+  console.log(req.body);
+
+  logsArray.push({
+    input: req.body,
+    timestamp: new Date().toISOString(),
+  });
+
+  res.status(200).json({ message: "Request received" });
 });
 
 app.get("/health", (req, res) => {
