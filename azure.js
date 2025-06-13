@@ -1446,6 +1446,45 @@ async function getProjFromLLM(input, packages) {
   return JSON.parse(jsonResponse);
 }
 
+async function getAnsFromLLM(input, packages) {
+  const response = await client.run({
+    messages: [
+      {
+        role: "system",
+        content: `You are an expert assistant for the Scholar@SAP Onboarding Portal FAQs.
+      
+      You are given a list of frequently asked questions and their corresponding answers:\n${JSON.stringify(
+        packages
+      )}
+      
+      Your task is to:
+      - Understand the user's natural language query.
+      - Select the **most appropriate** FAQ item that best answers the user's question.
+      
+      Response rules:
+      - If a match is found, respond with a JSON object containing these keys: "id", "question", and "answer".
+      - If **none** of the FAQs are relevant, respond with a JSON object like this: { "message": "No FAQ found" }.
+      - Do **not** include any extra text, explanations, formatting, or markdown.
+      - Focus on **intent and meaning**, not just keyword overlap.`,
+      },
+      {
+        role: "user",
+        content: `User query: "${input}"`,
+      },
+    ],
+  });
+
+  let jsonResponse = response.getContent();
+  console.log("LLM Response:", jsonResponse);
+
+  if (response.getContent().startsWith("```json")) {
+    jsonResponse = extractJsonFromLLMResponse(jsonResponse);
+  }
+  console.log("Extracted JSON:", jsonResponse);
+
+  return JSON.parse(jsonResponse);
+}
+
 app.post("/", async (req, res) => {
   if (embeddedDocs.length === 0) {
     return res.status(500).json({ error: "No embedded documents available" });
@@ -1611,17 +1650,19 @@ app.post("/faq", async (req, res) => {
       .sort((a, b) => b.score - a.score);
 
     const top = ranked[0];
+    const topFive = ranked.slice(0, 5);
     if (top.score < 0.6) {
       return res
         .status(404)
         .json({ message: "Sorry, I couldn't find a matching answer." });
     }
 
+    console.log("Top FAQ match:", topFive);
+    //call llm with top 5
+    const responseFromLLm = await getAnsFromLLM(input, topFive);
+
     return res.json({
-      id: top.doc.id,
-      question: top.doc.question,
-      answer: top.doc.answer,
-      score: top.score,
+      responseFromLLm,
     });
   } catch (e) {
     console.error("FAQ query failed", e);
