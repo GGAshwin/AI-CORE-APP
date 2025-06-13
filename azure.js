@@ -955,6 +955,236 @@ const projTypes = [
   },
 ];
 
+const knowledgeBase = [
+  {
+    question: "Queries regarding the events",
+    answer:
+      "Kindly create a query on forums on Scholar@SAP Onboarding Portal and the Onboarding team will get back to you.",
+  },
+  {
+    question: "How to provide feedback of the event",
+    answer:
+      "Kindly post it on portal or write to us at scholar_onboarding@sap.com",
+  },
+  {
+    question:
+      "Can we get suggestions from our seniors that which PGs are good near the office/list of PG’s?",
+    answer:
+      "You can reach out to your buddies to get help with finding accomodation.",
+  },
+  {
+    question: "Will the accommodation be provided by SAP for the initial days?",
+    answer:
+      "SAP will not be providing any accomodation. You will have to make your own arrangements from Day 1.",
+  },
+  {
+    question: "What to prepare for day one?",
+    answer:
+      "We will provide you with a list of what you need for your first day a few days before joining.",
+  },
+  {
+    question: "Will travel expenses be reimbursed by SAP?",
+    answer: "No, SAP will not bear any expenses.",
+  },
+  {
+    question: "What is the dress code? Can we wear casual clothes?",
+    answer:
+      "SAP doesn't have a dress code as such. But Business Casuals are fine.",
+  },
+  {
+    question: "Which technologies will be allocated after joining?",
+    answer: "You will be briefed about this during onboarding.",
+  },
+  {
+    question: "What is Employee consent form?",
+    answer: "The Employee Consent form is not applicable for Scholars.",
+  },
+  {
+    question: "Queries regarding documents",
+    answer:
+      "Please post the query on the portal and we will try our best to assist you.",
+  },
+  {
+    question: "Queries regarding Shuttle service",
+    answer:
+      "SAP shuttle services will be provided the evening of Day 1 onwards.",
+  },
+  {
+    question:
+      "Will my accomodation and travel expenses for the zeroth day be reimbursed?",
+    answer:
+      "No, SAP will not bear any expenses for your accomodation and travel.",
+  },
+  {
+    question: "Is it mandatory to attend the event?",
+    answer: "No, it is not mandatory.",
+  },
+  {
+    question: "What is a Buddy?",
+    answer:
+      "Buddies are your seniors assigned to you with whom you can discuss your problems and ask for help whenever required.",
+  },
+  {
+    question: "When will we be assigned to a team?",
+    answer:
+      "Post onboarding, you will go through trainings, after which you'll be getting into your Project Teams.",
+  },
+  {
+    question: "How will we get into our project teams?",
+    answer:
+      "You will be intimated about this during the first week of your onboarding.",
+  },
+  {
+    question: "Can our parents accompany us on Zeroth Day?",
+    answer:
+      "We only allow family visit on Weekends, after you join SAP. Family will not be allowed to accompany you on Zeroth Day.",
+  },
+  {
+    question:
+      "After we join, will there be any training or we will start working on projects?",
+    answer:
+      "Trainings on different technologies will be conducted for the first month of joining.",
+  },
+  {
+    question: "Will a team be allocated to us or can we choose it?",
+    answer:
+      "Once your training is completed, you will be given an opportunity to choose and work in a team based on your interest.",
+  },
+  {
+    question: "What are the conditions and procedures for Incorporation?",
+    answer: "This will be shared post joining.",
+  },
+  {
+    question: "What is the current leave policy for Scholars?",
+    answer: "This will be shared post joining.",
+  },
+  {
+    question: "Course recommended for practice before joining?",
+    answer:
+      "Please check the 'Courses' tab on the onboarding portal for some recommended courses.",
+  },
+  {
+    question: "What are the general office timings?",
+    answer: "Depends on your Team and their working culture.",
+  },
+  {
+    question: "How do I reach out incase of any Query?",
+    answer:
+      "Kindly create a query on forums on Scholar@SAP Onboarding Portal and the Onboarding team will get back to you.",
+  },
+  {
+    question: "Till when will we continue Work From Home?",
+    answer:
+      "As on now, we have Work From Home until the 31st of December, however it may be extended depending on the situation of Covid then.",
+  },
+  {
+    question: "How can I open salary account?",
+    answer: "This will be taken care by SAP once you are onboarded",
+  },
+  {
+    question: "What is India PR and UAN Number?",
+    answer:
+      "If you are not an Indian citizen, kindly reach out to us via email for more information.",
+  },
+  {
+    question: "Who do we contact incase of issues with the Portal?",
+    answer:
+      "You can either create a query in the Forums Section or leave an email on scholar_onboarding@sap.com",
+  },
+  {
+    question: "What if my family is sick and I need to take care of them?",
+    answer: "You can inform your Vocational Trainer and avail Leave.",
+  },
+  {
+    question: "Will we be reimbursed broadband charges?",
+    answer: "Yes, as per current company's policy.",
+  },
+  {
+    question: "When will we be receiving our laptop?",
+    answer: "You will be mostly receiving your laptops prior your onboarding",
+  },
+  {
+    question: "What if we don’t get our laptop on time?",
+    answer: "Our IT Team will assist you to configure your personal laptop.",
+  },
+  {
+    question: "I have changed my address",
+    answer:
+      "Please write an email to the onboarding team with your current Address",
+  },
+  {
+    question: "Queries regarding not getting offer letters",
+    answer:
+      "Please write to the VT / TA Spoc at the earliest if you have not received your offer letters.",
+  },
+  {
+    question:
+      "I was not able to answer the call from the onboarding team. Do I have to confirm my availability?",
+    answer:
+      "Make sure you provide responses to the forms shared on the Onboarding portal. Kindly provide us with a phone number through which we can keep in touch with you.",
+  },
+  {
+    question: "Will our Onboarding be Virtual?",
+    answer: "Yes.",
+  },
+  {
+    question: "What is our Joining Date?",
+    answer: "2nd August, 2021.",
+  },
+  {
+    question: "What do I do if I fall sick during Onboarding and Training?",
+    answer: "You can get in touch with your Vocational Trainer and avail Leave",
+  },
+  {
+    question: "Exams during Onboarding",
+    answer: "You can inform your Vocational Trainer and avail Leave.",
+  },
+  {
+    question:
+      "Do we need to sign any agreement before we join the Scholar Program?",
+    answer: "We do not have any such bonds in SAP.",
+  },
+  {
+    question: "Do we have to get a NOC from our college?",
+    answer:
+      "Yes, you need a No-objection certificate from your college on the day of joining.",
+  },
+  {
+    question: "How will my Classes and Exams take place?",
+    answer:
+      "Both classes and exams shall be conducted online, more details shall be shared post onboarding.",
+  },
+  {
+    question:
+      "I don’t have my degree certificate yet. Will provisional certificate be enough?",
+    answer: "Yes",
+  },
+  {
+    question: "I don’t have my PAN Card with me. Is it necessary for joining?",
+    answer: "Yes, your PAN card is mandatory for bank account creation.",
+  },
+  {
+    question: "What will be the timings for the BITS classes on Saturdays?",
+    answer: "BITS classes will be held from 9.00 am to 6.00 pm",
+  },
+  {
+    question:
+      "When will the exams be conducted? Will it be during office hours/weekdays?",
+    answer:
+      "All the BITS classes and examinations will be held on the weekends and will not interfere with your office hours.",
+  },
+  {
+    question: "Will we be getting any holidays for studying for the exams?",
+    answer: "Yes, you will be getting Leaves.",
+  },
+  {
+    question:
+      "I am yet to receive my final semester mark sheet. Can I upload the marksheets until the previous semester?",
+    answer:
+      "Yes, you can submit the final marksheet according to the deadline provided to you later.",
+  },
+];
+
 import "dotenv/config";
 import {
   AzureOpenAiChatClient,
@@ -975,6 +1205,7 @@ const port = process.env.PORT || 3001;
 
 let embeddedDocs = [];
 let projEmbedeedDocs = [];
+let embeddedFaqs = [];
 let embeddingClient = new AzureOpenAiEmbeddingClient({
   modelName: "text-embedding-3-small",
   deploymentId: "d95b690b7dee36bb",
@@ -1013,6 +1244,22 @@ let logsArray = [];
 
 // Initialize the client
 async function init() {
+  const faqStrings = knowledgeBase.map((item) => item.question);
+
+  const faqEmbeddingParams = {
+    input: faqStrings,
+    user: "faq-user",
+  };
+
+  const faqResponseVek = (
+    await embeddingClient.run(faqEmbeddingParams)
+  ).getEmbeddings();
+
+  embeddedFaqs = faqResponseVek.map((vector, i) => ({
+    ...knowledgeBase[i],
+    vector,
+  }));
+
   const inputStrings = data.map((item) => `${item.name}: ${item.description}`);
 
   const projectStrings = projTypes.map(
@@ -1073,8 +1320,8 @@ const cosineSimilarity = (a, b) => {
   const normA = Math.sqrt(a.reduce((sum, ai) => sum + ai * ai, 0));
   const normB = Math.sqrt(b.reduce((sum, bi) => sum + bi * bi, 0));
 
-  console.log("Dot product:", dot);
-  console.log("NormA:", normA, "NormB:", normB);
+  // console.log("Dot product:", dot);
+  // console.log("NormA:", normA, "NormB:", normB);
 
   if (normA === 0 || normB === 0) {
     console.warn(
@@ -1153,8 +1400,13 @@ async function getFromLLM(input, packages) {
     jsonResponse = extractJsonFromLLMResponse(jsonResponse);
   }
   console.log("Extracted JSON:", jsonResponse);
+  console.log(typeof jsonResponse);
 
-  return JSON.parse(jsonResponse);
+  try {
+    return JSON.parse(jsonResponse);
+  } catch (error) {
+    return { message: "No package or project type found" };
+  }
 }
 
 async function getProjFromLLM(input, packages) {
@@ -1209,8 +1461,8 @@ app.post("/", async (req, res) => {
   let queryEmbedding = await embeddingClient.run(inputObj);
   queryEmbedding = queryEmbedding.getEmbeddings()[0];
 
-  console.log("Query vector length:", queryEmbedding.length);
-  console.log("Document vector length:", embeddedDocs.length);
+  // console.log("Query vector length:", queryEmbedding.length);
+  // console.log("Document vector length:", embeddedDocs.length);
 
   const ranked = embeddedDocs
     .map((doc) =>
@@ -1240,15 +1492,15 @@ app.post("/", async (req, res) => {
   const best = await getFromLLM(input, topCandidates);
   console.log(best);
 
-  if (best.message === "No package or project type found") {
-    return res.status(404).json(best);
-  }
-
   logsArray.push({
     input: input,
     best: best,
     timestamp: new Date().toISOString(),
   });
+
+  if (best.message === "No package or project type found") {
+    return res.status(404).json(best);
+  }
 
   //check if the id of the best is in PROJ_TYPES object
   if (PROJ_TYPES.includes(best.id)) {
@@ -1332,6 +1584,49 @@ app.post("/checkreq", (req, res) => {
   });
 
   res.status(200).json({ message: "Request received" });
+});
+
+app.post("/faq", async (req, res) => {
+  if (embeddedFaqs.length === 0) {
+    return res.status(500).json({ error: "FAQ embeddings not ready" });
+  }
+
+  const { input } = req.body;
+  if (!input) return res.status(400).json({ error: "Question required" });
+
+  const inputObj = {
+    input: input,
+    user: "faq-user",
+  };
+
+  try {
+    let queryEmbedding = await embeddingClient.run(inputObj);
+    queryEmbedding = queryEmbedding.getEmbeddings()[0];
+
+    const ranked = embeddedFaqs
+      .map((doc) => ({
+        doc,
+        score: cosineSimilarity(queryEmbedding, doc.vector),
+      }))
+      .sort((a, b) => b.score - a.score);
+
+    const top = ranked[0];
+    if (top.score < 0.6) {
+      return res
+        .status(404)
+        .json({ message: "Sorry, I couldn't find a matching answer." });
+    }
+
+    return res.json({
+      id: top.doc.id,
+      question: top.doc.question,
+      answer: top.doc.answer,
+      score: top.score,
+    });
+  } catch (e) {
+    console.error("FAQ query failed", e);
+    return res.status(500).json({ error: "Failed to process FAQ request" });
+  }
 });
 
 app.get("/health", (req, res) => {
