@@ -1201,7 +1201,7 @@ const { json } = bodyParser;
 const app = express();
 app.use(cors());
 app.use(json());
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 
 let embeddedDocs = [];
 let projEmbedeedDocs = [];
