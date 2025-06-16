@@ -1152,7 +1152,7 @@ const knowledgeBase = [
   {
     question: "How will my Classes and Exams take place?",
     answer:
-      "Both classes and exams shall be conducted online, more details shall be shared post onboarding.",
+      "Both classes and exams shall be conducted offline, more details shall be shared post onboarding.",
   },
   {
     question:
