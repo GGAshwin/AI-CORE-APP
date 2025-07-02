@@ -1244,22 +1244,6 @@ let logsArray = [];
 
 // Initialize the client
 async function init() {
-  const faqStrings = knowledgeBase.map((item) => item.question);
-
-  const faqEmbeddingParams = {
-    input: faqStrings,
-    user: "faq-user",
-  };
-
-  const faqResponseVek = (
-    await embeddingClient.run(faqEmbeddingParams)
-  ).getEmbeddings();
-
-  embeddedFaqs = faqResponseVek.map((vector, i) => ({
-    ...knowledgeBase[i],
-    vector,
-  }));
-
   const inputStrings = data.map((item) => `${item.name}: ${item.description}`);
 
   const projectStrings = projTypes.map(
@@ -1332,24 +1316,6 @@ const cosineSimilarity = (a, b) => {
 
   return dot / (normA * normB);
 };
-
-function euclideanDistance(a, b) {
-  if (a.length !== b.length) {
-    throw new Error("Vectors must be the same length");
-  }
-
-  let sum = 0;
-  for (let i = 0; i < a.length; i++) {
-    const diff = a[i] - b[i];
-    if (isNaN(diff)) {
-      console.warn(`Invalid number at index ${i}: a=${a[i]}, b=${b[i]}`);
-      continue; // or throw error
-    }
-    sum += diff * diff;
-  }
-
-  return Math.sqrt(sum);
-}
 
 function extractJsonFromLLMResponse(text) {
   if (text.match(/^\[/)) {
@@ -1427,45 +1393,6 @@ async function getProjFromLLM(input, packages) {
           - Do **not** add any explanations, formatting, or text outside of the JSON or message above.
           - Focus on **meaning and intent**, not just keyword overlap.
           - Respond with a JSON object containing these keys: "id", "name", and "description" for each project type.`,
-      },
-      {
-        role: "user",
-        content: `User query: "${input}"`,
-      },
-    ],
-  });
-
-  let jsonResponse = response.getContent();
-  console.log("LLM Response:", jsonResponse);
-
-  if (response.getContent().startsWith("```json")) {
-    jsonResponse = extractJsonFromLLMResponse(jsonResponse);
-  }
-  console.log("Extracted JSON:", jsonResponse);
-
-  return JSON.parse(jsonResponse);
-}
-
-async function getAnsFromLLM(input, packages) {
-  const response = await client.run({
-    messages: [
-      {
-        role: "system",
-        content: `You are an expert assistant for the Scholar@SAP Onboarding Portal FAQs.
-      
-      You are given a list of frequently asked questions and their corresponding answers:\n${JSON.stringify(
-        packages
-      )}
-      
-      Your task is to:
-      - Understand the user's natural language query.
-      - Select the **most appropriate** FAQ item that best answers the user's question.
-      
-      Response rules:
-      - If a match is found, respond with a JSON object containing these keys: "id", "question", and "answer".
-      - If **none** of the FAQs are relevant, respond with a JSON object like this: { "message": "No FAQ found" }.
-      - Do **not** include any extra text, explanations, formatting, or markdown.
-      - Focus on **intent and meaning**, not just keyword overlap.`,
       },
       {
         role: "user",
@@ -1623,51 +1550,6 @@ app.post("/checkreq", (req, res) => {
   });
 
   res.status(200).json({ message: "Request received" });
-});
-
-app.post("/faq", async (req, res) => {
-  if (embeddedFaqs.length === 0) {
-    return res.status(500).json({ error: "FAQ embeddings not ready" });
-  }
-
-  const { input } = req.body;
-  if (!input) return res.status(400).json({ error: "Question required" });
-
-  const inputObj = {
-    input: input,
-    user: "faq-user",
-  };
-
-  try {
-    let queryEmbedding = await embeddingClient.run(inputObj);
-    queryEmbedding = queryEmbedding.getEmbeddings()[0];
-
-    const ranked = embeddedFaqs
-      .map((doc) => ({
-        doc,
-        score: cosineSimilarity(queryEmbedding, doc.vector),
-      }))
-      .sort((a, b) => b.score - a.score);
-
-    const top = ranked[0];
-    const topFive = ranked.slice(0, 5);
-    if (top.score < 0.6) {
-      return res
-        .status(404)
-        .json({ message: "Sorry, I couldn't find a matching answer." });
-    }
-
-    console.log("Top FAQ match:", topFive);
-    //call llm with top 5
-    const responseFromLLm = await getAnsFromLLM(input, topFive);
-
-    return res.json({
-      responseFromLLm,
-    });
-  } catch (e) {
-    console.error("FAQ query failed", e);
-    return res.status(500).json({ error: "Failed to process FAQ request" });
-  }
 });
 
 app.get("/health", (req, res) => {
